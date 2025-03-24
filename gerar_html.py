@@ -36,6 +36,24 @@ pagina.write("""
                 text-align: center;
                 font-size: 20px;
             }
+            .aprovado{
+                background-color: green;
+                color: white;
+            }
+            .reprovado{
+                background-color: red;
+                color: white;
+            }
+            .linhavazia{
+                background: transparent;
+                border-right: 0;
+                border-left: 0;
+                border-right-color: white;
+                border-left-color: white;
+            }
+            .linhavazia:nth-child(1){
+                display:none;
+            }
         </style>
     </head>
     <body>
@@ -45,9 +63,12 @@ pagina.write("""
 """)
 for aluno, desempenho in boletim_lido.items():
     pagina.write(f"""
+            <tr class="linhavazia"><td colspan="6">&nbsp</td></tr>
+
             <tr>
                 <th class="nome" colspan="6">{aluno}</th>
             </tr>
+
             <tr>
                 <th>Materia</th>
                 <th>1ºB</th>
@@ -65,11 +86,21 @@ for aluno, desempenho in boletim_lido.items():
                     <td>{notas[1]}</td>
                     <td>{notas[2]}</td>
                     <td>{notas[3]}</td>
-                    <td>{notas[4]}</td>
-                </tr>
-            """)    
-pagina.write("""
-                    </tr>
+               
+            """)
+        if notas[4] >= 5:
+            pagina.write(f"""
+                    <td class="aprovado">{notas[4]}</td>
+                    
+                """)
+        else:
+            pagina.write(f"""
+                    <td class="reprovado">{notas[4]}</td>
+                
+                """)
+        pagina.write("""</tr>""")
+pagina.write(f"""
+                </tr>                 
             </table>
         </body>
     </html>
